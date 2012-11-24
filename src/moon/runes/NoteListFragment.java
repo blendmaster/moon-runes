@@ -1,13 +1,14 @@
 package moon.runes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import moon.runes.dummy.DummyContent;
 
 /**
  * A list fragment representing a list of Notes. This fragment also supports
@@ -70,12 +71,16 @@ public class NoteListFragment extends ListFragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    List<Note> notes = new ArrayList<Note>();
+    notes.add(new Note());
+    notes.add(new Note());
+    notes.add(new Note());
+
     // TODO: replace with a real list adapter.
-    setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
-                                                            getActivity(),
-                                                            android.R.layout.simple_list_item_activated_1,
-                                                            android.R.id.text1,
-                                                            DummyContent.ITEMS));
+    setListAdapter(new ArrayAdapter<Note>(getActivity(),
+                                          android.R.layout.simple_list_item_activated_1,
+                                          android.R.id.text1,
+                                          notes));
   }
 
   @Override
@@ -118,7 +123,8 @@ public class NoteListFragment extends ListFragment {
 
     // Notify the active callbacks interface (the activity, if the
     // fragment is attached to one) that an item has been selected.
-    mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+    // TODO
+    mCallbacks.onItemSelected("1");
   }
 
   @Override
