@@ -9,6 +9,7 @@ import android.widget.ListView
 import java.util.ArrayList
 
 import static moon.runes.NoteListFragment.*
+import com.googlecode.androidannotations.annotations.EFragment
 
 /**
  * A list fragment representing a list of Notes. This fragment also supports
@@ -19,6 +20,7 @@ import static moon.runes.NoteListFragment.*
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
+@EFragment
 public class NoteListFragment extends ListFragment {
 
   /**
@@ -44,12 +46,6 @@ public class NoteListFragment extends ListFragment {
    */
   private static Callbacks sDummyCallbacks = {[]}
 
-  /**
-   * Mandatory empty constructor for the fragment manager to instantiate the
-   * fragment (e.g. upon screen orientation changes).
-   */
-  new() {}
-
   override onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState)
 
@@ -59,19 +55,20 @@ public class NoteListFragment extends ListFragment {
     notes.add(new Note())
 
     // TODO: replace with a real list adapter.
-    setListAdapter(new ArrayAdapter<Note>(getActivity(),
-                                          android::R$layout::simple_list_item_activated_1,
-                                          android::R$id::text1,
-                                          notes))
+    listAdapter = new ArrayAdapter<Note>(
+      activity,
+      android::R$layout::simple_list_item_activated_1,
+      android::R$id::text1,
+      notes)
   }
 
   override onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState)
 
     // Restore the previously serialized activated item position.
-    if (savedInstanceState != null
-        && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
-      setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION))
+    if (savedInstanceState?.containsKey(STATE_ACTIVATED_POSITION)) {
+      activatedPosition =
+        savedInstanceState.getInt(STATE_ACTIVATED_POSITION)
     }
   }
 
@@ -94,9 +91,9 @@ public class NoteListFragment extends ListFragment {
   }
 
   override onListItemClick(ListView listView,
-                              View view,
-                              int position,
-                              long id) {
+                            View view,
+                            int position,
+                            long id) {
     super.onListItemClick(listView, view, position, id)
 
     // Notify the active callbacks interface (the activity, if the
@@ -120,16 +117,16 @@ public class NoteListFragment extends ListFragment {
   def void setActivateOnItemClick(boolean activateOnItemClick) {
     // When setting CHOICE_MODE_SINGLE, ListView will automatically
     // give items the 'activated' state when touched.
-    getListView().setChoiceMode(if (activateOnItemClick)
+    listView.choiceMode = if (activateOnItemClick)
         ListView::CHOICE_MODE_SINGLE
-        else ListView::CHOICE_MODE_NONE)
+        else ListView::CHOICE_MODE_NONE
   }
 
   def private void setActivatedPosition(int position) {
     if (position == ListView::INVALID_POSITION) {
-      getListView().setItemChecked(mActivatedPosition, false)
+      listView.setItemChecked(mActivatedPosition, false)
     } else {
-      getListView().setItemChecked(position, true)
+      listView.setItemChecked(position, true)
     }
 
     mActivatedPosition = position

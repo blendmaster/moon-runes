@@ -3,6 +3,8 @@ package moon.runes
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
+import com.googlecode.androidannotations.annotations.EActivity
+import com.googlecode.androidannotations.annotations.FragmentById
 
 /**
  * An activity representing a list of Notes. This activity has different
@@ -16,9 +18,10 @@ import android.support.v4.app.FragmentActivity
  * {@link NoteListFragment} and the item details (if present) is a
  * {@link NoteDetailFragment}.
  * <p>
- * This activity also implements the required {@link NoteListFragment.Callbacks}
+ * This activity also implements the required {@link Callbacks}
  * interface to listen for item selections.
  */
+@EActivity(R$layout::activity_note_list)
 public class NoteListActivity extends FragmentActivity
     implements Callbacks {
 
@@ -28,9 +31,10 @@ public class NoteListActivity extends FragmentActivity
    */
   private boolean mTwoPane
 
+  @FragmentById public NoteListFragment note_list
+
   override onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R$layout::activity_note_list)
 
     if (findViewById(R$id::note_detail_container) != null) {
       // The detail container view will be present only in the
@@ -41,37 +45,37 @@ public class NoteListActivity extends FragmentActivity
 
       // In two-pane mode, list items should be given the
       // 'activated' state when touched.
-      (getSupportFragmentManager()
-        .findFragmentById(R$id::note_list) as NoteListFragment)
-        .setActivateOnItemClick(true);
+      note_list.activateOnItemClick = true;
     }
   }
 
   /**
-   * Callback method from {@link NoteListFragment.Callbacks} indicating that the
+   * Callback method from {@link Callbacks} indicating that the
    * item with the given ID was selected.
    */
   override onItemSelected(String theid) {
     // XXX stupid xtend breaks if there is an argument called "id" and 
     // a static access to a static inner class "R$id" due to its aggressive 
-    // importing and caching of everything in the compiled output.
+    // importing and caching of everything in the compiled output, thus
+    // "String theid".
     if (mTwoPane) {
       // In two-pane mode, show the detail view in this activity by
       // adding or replacing the detail fragment using a
       // fragment transaction.
       val arguments = new Bundle()
-      arguments.putString(NoteDetailFragment::ARG_ITEM_ID, theid)
-      val fragment = new NoteDetailFragment()
-      fragment.setArguments(arguments)
-      getSupportFragmentManager().beginTransaction()
-                                 .replace(R$id::note_detail_container, fragment)
-                                 .commit()
+      arguments.putString("id", theid)
+      val fragment = new NoteDetailFragment_()
+      fragment.arguments = arguments
+      supportFragmentManager
+        .beginTransaction()
+        .replace(R$id::note_detail_container, fragment)
+        .commit()
 
     } else {
       // In single-pane mode, simply start the detail activity
       // for the selected item ID.
-      val detailIntent = new Intent(this, typeof(NoteDetailActivity))
-      detailIntent.putExtra(NoteDetailFragment::ARG_ITEM_ID, theid)
+      val detailIntent = new Intent(this, typeof(NoteDetailActivity_))
+      detailIntent.putExtra("id", theid)
       startActivity(detailIntent)
     }
   }

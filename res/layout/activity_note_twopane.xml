@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/note_list"
-        android:name="moon.runes.NoteListFragment"
+        android:name="moon.runes.NoteListFragment_"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
