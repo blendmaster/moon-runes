@@ -30,6 +30,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".NoteListActivity" />
         </activity>
+        <activity android:name="moon.runes.Recorder_" android:immersive="true"></activity>
     </application>
 
 </manifest>
