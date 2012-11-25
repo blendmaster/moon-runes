@@ -15,7 +15,7 @@ import com.googlecode.androidannotations.annotations.NoTitle
  * It becomes easier to spot patterns and links, you understand, when 
  * they are in this form." 
  */
-@EActivity @Fullscreen @NoTitle
+@EActivity
 class Recorder extends Activity 
 implements GestureOverlayView$OnGesturePerformedListener {
 
