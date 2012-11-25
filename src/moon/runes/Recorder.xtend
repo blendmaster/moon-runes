@@ -4,6 +4,7 @@ import android.app.Activity
 import com.googlecode.androidannotations.annotations.EActivity
 import android.os.Bundle
 import android.gesture.GestureOverlayView
+import static android.gesture.GestureOverlayView.*
 import android.gesture.Gesture
 import android.util.Log
 
@@ -22,7 +23,11 @@ implements GestureOverlayView$OnGesturePerformedListener {
 
     val it = new GestureOverlayView(this)
     addOnGesturePerformedListener(this)
-    gestureStrokeType = GestureOverlayView::GESTURE_STROKE_TYPE_MULTIPLE
+    
+    // be really lenient in what strokes to accept
+    gestureStrokeType               = GESTURE_STROKE_TYPE_MULTIPLE
+    gestureStrokeAngleThreshold     = 1 
+    gestureStrokeSquarenessTreshold = 0
     
     this.contentView = it
   }
