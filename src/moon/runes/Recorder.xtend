@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.gesture.GestureOverlayView
 import android.gesture.Gesture
 import android.util.Log
-import com.googlecode.androidannotations.annotations.Fullscreen
-import com.googlecode.androidannotations.annotations.NoTitle
 
 /**
  * "I use the Pensieve. One simply siphons the excess thoughts from one's 
@@ -22,10 +20,11 @@ implements GestureOverlayView$OnGesturePerformedListener {
   override onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState)
 
-    val overlay = new GestureOverlayView(this)
-    overlay.addOnGesturePerformedListener(this)
-
-    contentView = overlay
+    val it = new GestureOverlayView(this)
+    addOnGesturePerformedListener(this)
+    gestureStrokeType = GestureOverlayView::GESTURE_STROKE_TYPE_MULTIPLE
+    
+    this.contentView = it
   }
 
   override onGesturePerformed(GestureOverlayView view, Gesture gesture) {
