@@ -50,9 +50,9 @@ public class NoteListFragment extends ListFragment {
     super.onCreate(savedInstanceState)
 
     val notes = new ArrayList<Note>()
-    notes.add(new Note())
-    notes.add(new Note())
-    notes.add(new Note())
+    notes.add(new Note)
+    notes.add(new Note)
+    notes.add(new Note)
 
     // TODO: replace with a real list adapter.
     listAdapter = new ArrayAdapter<Note>(

@@ -21,7 +21,7 @@ public class NoteDetailFragment extends Fragment {
 
     if (arguments.containsKey("id")) {
       // TODO load from database or whatever
-      note = new Note()
+      note = new Note
     }
   }
 

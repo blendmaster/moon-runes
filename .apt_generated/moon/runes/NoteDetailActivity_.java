@@ -5,11 +5,13 @@
 
 package moon.runes;
 
+import android.R.id;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import com.googlecode.androidannotations.api.SdkVersionHelper;
@@ -61,6 +63,20 @@ public final class NoteDetailActivity_
 
     public static NoteDetailActivity_.IntentBuilder_ intent(Context context) {
         return new NoteDetailActivity_.IntentBuilder_(context);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean handled = super.onOptionsItemSelected(item);
+        if (handled) {
+            return true;
+        }
+        int itemId_ = item.getItemId();
+        if (itemId_ == id.home) {
+            home();
+            return true;
+        }
+        return false;
     }
 
     public static class IntentBuilder_ {

@@ -11,9 +11,9 @@ import android.content.Context
 class Note {
   @Property List<Rune> runes
   @Property String annotation
-  
+
   @Property Date creationTime = new Date()
-  
+
   def getRelativeCreationTime(Context c) {
     DateUtils::getRelativeDateTimeString(c,
                                          creationTime.getTime(),

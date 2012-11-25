@@ -4,9 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.NavUtils
-import android.view.MenuItem
 
 import com.googlecode.androidannotations.annotations.EActivity
+import com.googlecode.androidannotations.annotations.OptionsItem
 
 /**
  * An activity representing a single Note detail screen. This activity is only
@@ -26,9 +26,9 @@ public class NoteDetailActivity extends FragmentActivity {
 
     // add if fragment hasn't already been added
     if (savedInstanceState == null) {
-      val arguments = new Bundle()
+      val arguments = new Bundle
       arguments.putString("id", intent.getStringExtra("id"))
-      val fragment = new NoteDetailFragment_()
+      val fragment = new NoteDetailFragment_
       fragment.arguments = arguments
       supportFragmentManager.beginTransaction()
                             .add(R$id::note_detail_container, fragment)
@@ -36,14 +36,8 @@ public class NoteDetailActivity extends FragmentActivity {
     }
   }
 
-  override onOptionsItemSelected(MenuItem item) {
-    switch item.itemId {
-    case android::R$id::home: {
-        NavUtils::navigateUpTo(this, 
-                               new Intent(this, typeof(NoteListActivity_)))
-        return true
-      }
-    }
-    return super.onOptionsItemSelected(item)
+  @OptionsItem def home() {
+    NavUtils::navigateUpTo(this,
+                           new Intent(this, typeof(NoteListActivity_)))
   }
 }

@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import com.googlecode.androidannotations.annotations.EActivity
 import com.googlecode.androidannotations.annotations.FragmentById
+import android.view.Menu
+import android.view.MenuItem
 
 /**
  * An activity representing a list of Notes. This activity has different
@@ -21,6 +23,9 @@ import com.googlecode.androidannotations.annotations.FragmentById
  * This activity also implements the required {@link Callbacks}
  * interface to listen for item selections.
  */
+//@OptionsMenu(R$menu::note_list_menu)
+// XXX stupid xtend adds a Integer.valueOf wrapper to "R$menu::note_list_menu"
+// for some reason. breaks everything ;_;
 @EActivity(R$layout::activity_note_list)
 public class NoteListActivity extends FragmentActivity
     implements Callbacks {
@@ -62,9 +67,9 @@ public class NoteListActivity extends FragmentActivity
       // In two-pane mode, show the detail view in this activity by
       // adding or replacing the detail fragment using a
       // fragment transaction.
-      val arguments = new Bundle()
+      val arguments = new Bundle
       arguments.putString("id", theid)
-      val fragment = new NoteDetailFragment_()
+      val fragment = new NoteDetailFragment_
       fragment.arguments = arguments
       supportFragmentManager
         .beginTransaction()
@@ -78,5 +83,14 @@ public class NoteListActivity extends FragmentActivity
       detailIntent.putExtra("id", theid)
       startActivity(detailIntent)
     }
+  }
+
+  override onCreateOptionsMenu(Menu themenu) {
+    menuInflater.inflate(R$menu::note_list_menu, themenu)
+    super.onCreateOptionsMenu(themenu)
+  }
+
+  def startRecording(MenuItem item) {
+    startActivity(new Intent(this, typeof(Recorder_)))
   }
 }
