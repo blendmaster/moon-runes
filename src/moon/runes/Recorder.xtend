@@ -26,12 +26,12 @@ implements GestureOverlayView$OnGesturePerformedListener {
 
     val it = new GestureOverlayView(this)
     addOnGesturePerformedListener(this)
-    
+
     // be really lenient in what strokes to accept
     gestureStrokeType               = GESTURE_STROKE_TYPE_MULTIPLE
     gestureStrokeAngleThreshold     = 1
     gestureStrokeSquarenessTreshold = 0
-    
+
     this.contentView = it
   }
 

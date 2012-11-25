@@ -22,7 +22,7 @@ class Note {
                               WEEK_IN_MILLIS,
                               0)
   }
-  
+
   override toString() {
     '''Note: «getRelativeTimeSpanString(creationTime.time,
                                         new Date().time,
