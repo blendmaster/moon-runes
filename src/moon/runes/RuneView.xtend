@@ -17,6 +17,10 @@ import android.graphics.Color
 class RuneView extends View {
 
   @Property Note note
+  def setNote(Note note) {
+    _note = note
+    invalidate() // redraw at some point
+  }
 
   new(Context ctx, AttributeSet attrs, int defStyle) {
     super(ctx, attrs, defStyle)

@@ -7,7 +7,6 @@ import com.googlecode.androidannotations.annotations.EFragment
 import com.googlecode.androidannotations.annotations.AfterViews
 import com.googlecode.androidannotations.annotations.ViewById
 import com.googlecode.androidannotations.annotations.FragmentArg
-import android.util.Log
 
 /**
  * A fragment representing a single Note detail screen. This fragment is either
@@ -29,11 +28,8 @@ public class NoteDetailFragment extends Fragment {
   @ViewById public TextView note_detail
   @ViewById public RuneView rune_view
   @AfterViews def void loadNote() {
-    Log::d("ndf", "loading the fragment")
     note_detail.text = '''Runes: «note.runes.size»'''
     rune_view.note = note
-    rune_view.invalidate()
-    Log::d("ndf", ""+rune_view.height)
   }
 
 }
