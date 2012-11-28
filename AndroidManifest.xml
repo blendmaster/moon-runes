@@ -31,7 +31,7 @@
                 android:value=".NoteListActivity" />
         </activity>
         <activity
-            android:name="moon.runes.Recorder_"
+            android:name="moon.runes.RecorderActivity_"
             android:immersive="true"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         </activity>

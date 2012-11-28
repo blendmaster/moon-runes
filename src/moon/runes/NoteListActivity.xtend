@@ -87,6 +87,6 @@ public class NoteListActivity extends FragmentActivity
   }
 
   def startRecording(MenuItem item) {
-    Recorder_::intent(this).start()
+    RecorderActivity_::intent(this).start()
   }
 }

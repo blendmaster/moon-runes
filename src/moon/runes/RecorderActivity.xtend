@@ -15,7 +15,7 @@ import moon.runes.Note
  * they are in this form." 
  */
 @EActivity
-class Recorder extends Activity 
+class RecorderActivity extends Activity 
 implements GestureOverlayView$OnGesturePerformedListener {
   Note note
 
