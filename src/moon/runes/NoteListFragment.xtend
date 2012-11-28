@@ -6,7 +6,6 @@ import android.support.v4.app.ListFragment
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import java.util.ArrayList
 
 import static moon.runes.NoteListFragment.*
 import com.googlecode.androidannotations.annotations.EFragment
@@ -49,17 +48,12 @@ public class NoteListFragment extends ListFragment {
   override onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState)
 
-    val notes = new ArrayList<Note>()
-    notes.add(new Note)
-    notes.add(new Note)
-    notes.add(new Note)
-
     // TODO: replace with a real list adapter.
     listAdapter = new ArrayAdapter<Note>(
       activity,
       android::R$layout::simple_list_item_activated_1,
       android::R$id::text1,
-      notes)
+      Note::notes)
   }
 
   override onViewCreated(View view, Bundle savedInstanceState) {
@@ -77,10 +71,22 @@ public class NoteListFragment extends ListFragment {
 
     // Activities containing this fragment must implement its callbacks.
     if (!(activity instanceof Callbacks)) {
-      throw new IllegalStateException("Activity must implement fragment's callbacks.")
+      throw new IllegalStateException(
+        "Activity must implement fragment's callbacks.")
     }
 
     mCallbacks = activity as Callbacks;
+  }
+
+  override onResume() {
+    super.onResume()
+    // refresh list of runes
+    // TODO find better way to do this
+    listAdapter = new ArrayAdapter<Note>(
+      activity,
+      android::R$layout::simple_list_item_activated_1,
+      android::R$id::text1,
+      Note::notes)
   }
 
   override onDetach() {
@@ -96,10 +102,8 @@ public class NoteListFragment extends ListFragment {
                             long id) {
     super.onListItemClick(listView, view, position, id)
 
-    // Notify the active callbacks interface (the activity, if the
-    // fragment is attached to one) that an item has been selected.
-    // TODO
-    mCallbacks.onItemSelected("1")
+    // unsafe cast, oh well
+    mCallbacks.onItemSelected(id as int)
   }
 
   override onSaveInstanceState(Bundle outState) {

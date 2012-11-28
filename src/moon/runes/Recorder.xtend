@@ -23,6 +23,8 @@ implements GestureOverlayView$OnGesturePerformedListener {
     super.onCreate(savedInstanceState)
 
     note = new Note
+    // TODO real persistence
+    Note::notes += note
 
     val it = new GestureOverlayView(this)
     addOnGesturePerformedListener(this)

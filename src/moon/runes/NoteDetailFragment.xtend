@@ -6,6 +6,8 @@ import android.widget.TextView
 import com.googlecode.androidannotations.annotations.EFragment
 import com.googlecode.androidannotations.annotations.AfterViews
 import com.googlecode.androidannotations.annotations.ViewById
+import com.googlecode.androidannotations.annotations.FragmentArg
+import android.util.Log
 
 /**
  * A fragment representing a single Note detail screen. This fragment is either
@@ -15,19 +17,19 @@ import com.googlecode.androidannotations.annotations.ViewById
 @EFragment(R$layout::fragment_note_detail)
 public class NoteDetailFragment extends Fragment {
   Note note
+  
+  @FragmentArg public int id
 
   override onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState)
 
-    if (arguments.containsKey("id")) {
-      // TODO load from database or whatever
-      note = new Note
-    }
+    // TODO load from database or whatever
+    note = Note::notes.get(id)
   }
 
   @ViewById public TextView note_detail
   @AfterViews def loadNote() {
-    note_detail.text = note?.getRelativeCreationTime(activity)
+    note_detail.text = '''Runes: «note.runes.size»'''
   }
 
 }

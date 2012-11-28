@@ -7,6 +7,8 @@ import android.support.v4.app.NavUtils
 
 import com.googlecode.androidannotations.annotations.EActivity
 import com.googlecode.androidannotations.annotations.OptionsItem
+import com.googlecode.androidannotations.annotations.Extra
+import android.util.Log
 
 /**
  * An activity representing a single Note detail screen. This activity is only
@@ -18,6 +20,8 @@ import com.googlecode.androidannotations.annotations.OptionsItem
  */
 @EActivity(R$layout::activity_note_detail)
 public class NoteDetailActivity extends FragmentActivity {
+  
+  @Extra("id") public int theid
 
   override onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState)
@@ -27,7 +31,7 @@ public class NoteDetailActivity extends FragmentActivity {
     // add if fragment hasn't already been added
     if (savedInstanceState == null) {
       val arguments = new Bundle
-      arguments.putString("id", intent.getStringExtra("id"))
+      arguments.putInt("id", theid)
       val fragment = new NoteDetailFragment_
       fragment.arguments = arguments
       supportFragmentManager.beginTransaction()

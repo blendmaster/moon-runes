@@ -13,7 +13,7 @@ class Note {
   @Property List<Rune> runes = new ArrayList<Rune>
   @Property String annotation = ''
 
-  @Property Date creationTime = new Date()
+  @Property Date creationTime = new Date
 
   def getRelativeCreationTime(Context c) {
     getRelativeDateTimeString(c,
@@ -29,4 +29,7 @@ class Note {
                                         MINUTE_IN_MILLIS,
                                         0)»'''
   }
+  
+  // TODO actual persistence
+  public static List<Note> notes = new ArrayList<Note>
 }

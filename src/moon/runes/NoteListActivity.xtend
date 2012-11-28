@@ -1,12 +1,12 @@
 package moon.runes
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import com.googlecode.androidannotations.annotations.EActivity
 import com.googlecode.androidannotations.annotations.FragmentById
 import android.view.Menu
 import android.view.MenuItem
+import android.util.Log
 
 /**
  * An activity representing a list of Notes. This activity has different
@@ -58,17 +58,17 @@ public class NoteListActivity extends FragmentActivity
    * Callback method from {@link Callbacks} indicating that the
    * item with the given ID was selected.
    */
-  override onItemSelected(String theid) {
+  override onItemSelected(int theid) {
     // XXX stupid xtend breaks if there is an argument called "id" and 
     // a static access to a static inner class "R$id" due to its aggressive 
     // importing and caching of everything in the compiled output, thus
-    // "String theid".
+    // "int theid".
     if (mTwoPane) {
       // In two-pane mode, show the detail view in this activity by
       // adding or replacing the detail fragment using a
       // fragment transaction.
       val arguments = new Bundle
-      arguments.putString("id", theid)
+      arguments.putInt("id", theid)
       val fragment = new NoteDetailFragment_
       fragment.arguments = arguments
       supportFragmentManager
@@ -76,12 +76,8 @@ public class NoteListActivity extends FragmentActivity
         .replace(R$id::note_detail_container, fragment)
         .commit()
 
-    } else {
-      // In single-pane mode, simply start the detail activity
-      // for the selected item ID.
-      val detailIntent = new Intent(this, typeof(NoteDetailActivity_))
-      detailIntent.putExtra("id", theid)
-      startActivity(detailIntent)
+    } else { // In single-pane mode
+      NoteDetailActivity_::intent(this).theid(theid).start()
     }
   }
 
@@ -91,6 +87,6 @@ public class NoteListActivity extends FragmentActivity
   }
 
   def startRecording(MenuItem item) {
-    startActivity(new Intent(this, typeof(Recorder_)))
+    Recorder_::intent(this).start()
   }
 }
