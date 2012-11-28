@@ -6,7 +6,6 @@ import com.googlecode.androidannotations.annotations.EActivity
 import com.googlecode.androidannotations.annotations.FragmentById
 import android.view.Menu
 import android.view.MenuItem
-import android.util.Log
 
 /**
  * An activity representing a list of Notes. This activity has different

@@ -8,7 +8,6 @@ import android.support.v4.app.NavUtils
 import com.googlecode.androidannotations.annotations.EActivity
 import com.googlecode.androidannotations.annotations.OptionsItem
 import com.googlecode.androidannotations.annotations.Extra
-import android.util.Log
 
 /**
  * An activity representing a single Note detail screen. This activity is only

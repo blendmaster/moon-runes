@@ -17,7 +17,6 @@ import android.util.Log
 @EFragment(R$layout::fragment_note_detail)
 public class NoteDetailFragment extends Fragment {
   Note note
-  
   @FragmentArg public int id
 
   override onCreate(Bundle savedInstanceState) {
@@ -28,8 +27,13 @@ public class NoteDetailFragment extends Fragment {
   }
 
   @ViewById public TextView note_detail
-  @AfterViews def loadNote() {
+  @ViewById public RuneView rune_view
+  @AfterViews def void loadNote() {
+    Log::d("ndf", "loading the fragment")
     note_detail.text = '''Runes: «note.runes.size»'''
+    rune_view.note = note
+    rune_view.invalidate()
+    Log::d("ndf", ""+rune_view.height)
   }
 
 }
