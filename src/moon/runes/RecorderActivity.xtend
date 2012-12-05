@@ -4,9 +4,11 @@ import android.app.Activity
 import com.googlecode.androidannotations.annotations.EActivity
 import android.os.Bundle
 import android.gesture.GestureOverlayView
-import static android.gesture.GestureOverlayView.*
 import android.gesture.Gesture
 import moon.runes.Note
+import android.graphics.RectF
+import android.graphics.Matrix
+import static android.gesture.GestureOverlayView.*
 
 /**
  * "I use the Pensieve. One simply siphons the excess thoughts from one's 
@@ -37,8 +39,18 @@ implements GestureOverlayView$OnGesturePerformedListener {
     this.contentView = it
   }
 
+  // every stroke is normalized to this
+  static RectF normalized = new RectF(0, 0, 1, 1)
+
   override onGesturePerformed(GestureOverlayView view, Gesture gesture) {
-    note.runes += new Rune(gesture.strokes.map[path])
+    val bounds = gesture.boundingBox
+    val toNorm = new Matrix
+    toNorm.setRectToRect(bounds, normalized, Matrix$ScaleToFit::CENTER)
+
+    // add strokes as Rune
+    note.runes += new Rune(gesture.strokes.map[path].map[
+      it.transform(toNorm); it
+    ])
   }
 
 }
