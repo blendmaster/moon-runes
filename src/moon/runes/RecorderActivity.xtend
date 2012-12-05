@@ -9,6 +9,9 @@ import moon.runes.Note
 import android.graphics.RectF
 import android.graphics.Matrix
 import static android.gesture.GestureOverlayView.*
+import android.util.Log
+import java.util.ArrayList
+import android.graphics.Path
 
 /**
  * "I use the Pensieve. One simply siphons the excess thoughts from one's 
@@ -48,9 +51,13 @@ implements GestureOverlayView$OnGesturePerformedListener {
     toNorm.setRectToRect(bounds, normalized, Matrix$ScaleToFit::CENTER)
 
     // add strokes as Rune
-    note.runes += new Rune(gesture.strokes.map[path].map[
-      it.transform(toNorm); it
-    ])
+    // XXX array list wrapper is to force execution of lazy map
+    note.runes += new Rune(new ArrayList<Path>(gesture.strokes.map[path].map[
+      it.transform(toNorm)
+      val d = new RectF
+      it.computeBounds(d, true)
+      it
+    ]))
   }
 
 }

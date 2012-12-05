@@ -2,7 +2,6 @@ package moon.runes
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.widget.TextView
 import com.googlecode.androidannotations.annotations.EFragment
 import com.googlecode.androidannotations.annotations.AfterViews
 import com.googlecode.androidannotations.annotations.ViewById
@@ -25,10 +24,9 @@ public class NoteDetailFragment extends Fragment {
     note = Note::notes.get(id)
   }
 
-  @ViewById public TextView note_detail
   @ViewById public RuneView rune_view
+
   @AfterViews def void loadNote() {
-    note_detail.text = '''Runes: «note.runes.size»'''
     rune_view.note = note
   }
 

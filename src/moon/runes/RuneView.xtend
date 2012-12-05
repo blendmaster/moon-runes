@@ -7,6 +7,9 @@ import android.util.AttributeSet
 import android.graphics.Paint
 import android.graphics.Color
 import android.graphics.Matrix
+import android.util.Log
+import android.graphics.Path
+import android.graphics.RectF
 
 /**
  * "Stand by the grey stone when the thrush knocks and 
@@ -20,7 +23,7 @@ class RuneView extends View {
   @Property Note note
   def setNote(Note note) {
     _note = note
-    invalidate() // redraw at some point
+    requestLayout() // redraw at some point
   }
 
   new(Context ctx, AttributeSet attrs, int defStyle) {
@@ -50,9 +53,11 @@ class RuneView extends View {
     if (note == null) return;
 
     val p = new Paint
-    p.color       = Color::BLACK
+    p.color       = Color::WHITE
     p.style       = Paint$Style::STROKE
     p.strokeWidth = 5
+
+    c.drawColor(Color::BLACK)
 
     val toLetter = new Matrix
     toLetter.setScale(fontSize, fontSize)
@@ -60,13 +65,12 @@ class RuneView extends View {
 
     carriage = 0
 
-    // TODO transform and place each rune separately
     note.runes.forEach [
-      it.paths.forEach [
-        it.transform(toLetter)
-        c.drawPath(it, p)
-      ]
+      val path = new Path
+      paths.forEach [ path.addPath(it, toLetter) ]
+      c.drawPath(path, p)
 
+      // move carriage
       toLetter.postTranslate(letterSpacing, 0)
       carriage = carriage + letterSpacing // XXX "+=" not allowed ;_;
       if ((carriage + letterSpacing) > width) {
@@ -75,7 +79,23 @@ class RuneView extends View {
         toLetter.postTranslate(0, lineHeight) // line feed
       }
     ]
+  }
 
+  override onMeasure(int widthSpec, int heightSpec) {
+    // calculate full height necessary to display all the runes
+    var calcHeight = paddingTop
+    // XXX not using .forEach because closures 'r dumb
+    carriage = paddingLeft
+    for (rune : note?.runes) {
+      carriage = carriage + letterSpacing
+      if ((carriage + letterSpacing) > width) {
+        carriage = paddingLeft
+        calcHeight = calcHeight + lineHeight
+      }
+    }
+
+    setMeasuredDimension(View$MeasureSpec::getSize(widthSpec),
+                         calcHeight + lineHeight)
   }
 
 }
