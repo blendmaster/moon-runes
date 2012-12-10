@@ -1,15 +1,16 @@
 package moon.runes
 
-import android.view.View
 import android.content.Context
 import android.graphics.Canvas
-import android.util.AttributeSet
-import android.graphics.Paint
 import android.graphics.Color
 import android.graphics.Matrix
-import android.util.Log
+import android.graphics.Paint
+import android.graphics.Paint$Style
 import android.graphics.Path
-import android.graphics.RectF
+import android.util.AttributeSet
+import android.view.View
+import android.view.View$MeasureSpec
+import org.eclipse.xtend.lib.Property
 
 /**
  * "Stand by the grey stone when the thrush knocks and 
@@ -66,9 +67,9 @@ class RuneView extends View {
     carriage = 0
 
     note.runes.forEach [
-      val path = new Path
-      paths.forEach [ path.addPath(it, toLetter) ]
-      c.drawPath(path, p)
+      val strokePaths = new Path
+      strokes.forEach [ strokePaths.addPath(it.path, toLetter) ]
+      c.drawPath(strokePaths, p)
 
       // move carriage
       toLetter.postTranslate(letterSpacing, 0)

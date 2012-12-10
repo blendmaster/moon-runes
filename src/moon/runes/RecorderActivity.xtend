@@ -1,17 +1,18 @@
 package moon.runes
 
 import android.app.Activity
-import com.googlecode.androidannotations.annotations.EActivity
-import android.os.Bundle
-import android.gesture.GestureOverlayView
 import android.gesture.Gesture
-import moon.runes.Note
-import android.graphics.RectF
+import android.gesture.GestureOverlayView
+import android.gesture.GestureOverlayView$OnGesturePerformedListener
 import android.graphics.Matrix
-import static android.gesture.GestureOverlayView.*
-import android.util.Log
+import android.graphics.Matrix$ScaleToFit
+import android.graphics.RectF
+import android.os.Bundle
+import com.googlecode.androidannotations.annotations.EActivity
 import java.util.ArrayList
-import android.graphics.Path
+
+import static android.gesture.GestureOverlayView.*
+import static moon.runes.RecorderActivity.*
 
 /**
  * "I use the Pensieve. One simply siphons the excess thoughts from one's 
@@ -52,11 +53,10 @@ implements GestureOverlayView$OnGesturePerformedListener {
 
     // add strokes as Rune
     // XXX array list wrapper is to force execution of lazy map
-    note.runes += new Rune(new ArrayList<Path>(gesture.strokes.map[path].map[
-      it.transform(toNorm)
-      val d = new RectF
-      it.computeBounds(d, true)
-      it
+    note.runes += new Rune(new ArrayList<Stroke>(gesture.strokes.map[
+      var float[] normPoints = new ArrayList(points)
+      toNorm.mapPoints(normPoints)
+      new Stroke(normPoints)
     ]))
   }
 

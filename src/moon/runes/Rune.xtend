@@ -1,16 +1,15 @@
 package moon.runes
 
 import java.util.List
-import android.graphics.Path
-import java.util.ArrayList
+import org.eclipse.xtend.lib.Property
 
 /**
  * A symbol of great power.
  */
 class Rune {
-  @Property List<Path> paths = new ArrayList<Path>
-  
-  new(List<Path> paths) { 
-    this.paths = paths
+  @Property List<Stroke> strokes
+
+  new(List<Stroke> strokes) {
+    this.strokes = strokes
   }
 }
