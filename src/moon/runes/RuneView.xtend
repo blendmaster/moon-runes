@@ -11,6 +11,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.View$MeasureSpec
 import org.eclipse.xtend.lib.Property
+import android.util.TypedValue
 
 /**
  * "Stand by the grey stone when the thrush knocks and 
@@ -46,6 +47,11 @@ class RuneView extends View {
   @Property var letterSpacing = 110
   @Property var paddingLeft   = 10
   @Property var paddingTop    = 10
+  @Property var color         = {
+    val tv = new TypedValue
+    context.theme.resolveAttribute(android::R$attr::colorForeground, tv, true)
+    resources.getColor(tv.resourceId)
+  }
 
   // carriage position, as x offset
   var carriage = 0
@@ -54,11 +60,9 @@ class RuneView extends View {
     if (note == null) return;
 
     val p = new Paint
-    p.color       = Color::WHITE
+    p.color       = color
     p.style       = Paint$Style::STROKE
     p.strokeWidth = 5
-
-    c.drawColor(Color::BLACK)
 
     val toLetter = new Matrix
     toLetter.setScale(fontSize, fontSize)
