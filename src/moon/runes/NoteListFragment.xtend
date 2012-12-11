@@ -45,17 +45,6 @@ public class NoteListFragment extends ListFragment {
    */
   private static Callbacks sDummyCallbacks = {[]}
 
-  override onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState)
-
-    // TODO: replace with a real list adapter.
-    listAdapter = new ArrayAdapter<Note>(
-      activity,
-      android::R$layout::simple_list_item_activated_1,
-      android::R$id::text1,
-      Note::notes)
-  }
-
   override onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState)
 
@@ -80,13 +69,12 @@ public class NoteListFragment extends ListFragment {
 
   override onResume() {
     super.onResume()
-    // refresh list of runes
-    // TODO find better way to do this
+
     listAdapter = new ArrayAdapter<Note>(
       activity,
       android::R$layout::simple_list_item_activated_1,
       android::R$id::text1,
-      Note::notes)
+      MoonRunes::notes)
   }
 
   override onDetach() {
