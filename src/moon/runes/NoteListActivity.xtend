@@ -67,7 +67,7 @@ public class NoteListActivity extends FragmentActivity
       // adding or replacing the detail fragment using a
       // fragment transaction.
       val arguments = new Bundle
-      arguments.putInt("id", theid)
+      arguments.putInt("theid", theid)
       val fragment = new NoteDetailFragment_
       fragment.arguments = arguments
       supportFragmentManager

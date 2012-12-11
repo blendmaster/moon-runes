@@ -30,7 +30,7 @@ public class NoteDetailActivity extends FragmentActivity {
     // add if fragment hasn't already been added
     if (savedInstanceState == null) {
       val arguments = new Bundle
-      arguments.putInt("id", theid)
+      arguments.putInt("theid", theid)
       val fragment = new NoteDetailFragment_
       fragment.arguments = arguments
       supportFragmentManager.beginTransaction()
