@@ -14,14 +14,7 @@ class Stroke {
     this.points = points
   }
 
-  Path cPath // cached Path
-
   def getPath() {
-    if (cPath == null) cPath = makePath() else cPath
-  }
-
-  // adapted from the GestureStroke source
-  def private makePath() {
     val it = new Path()
     var float mX = points.get(0); // XXX what the fuck Xtend
     var float mY = points.get(1);

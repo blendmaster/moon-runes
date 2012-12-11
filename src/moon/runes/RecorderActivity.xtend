@@ -30,7 +30,7 @@ implements GestureOverlayView$OnGesturePerformedListener {
 
     note = new Note
     // TODO real persistence
-    Note::notes += note
+    MoonRunes::notes += note
 
     val it = new GestureOverlayView(this)
     addOnGesturePerformedListener(this)
@@ -58,6 +58,12 @@ implements GestureOverlayView$OnGesturePerformedListener {
       toNorm.mapPoints(normPoints)
       new Stroke(normPoints)
     ]))
+  }
+
+  override protected onPause() {
+    (application as MoonRunes).save // persist the new notes
+
+    super.onPause()
   }
 
 }

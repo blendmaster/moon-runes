@@ -29,7 +29,5 @@ class Note {
                                         MINUTE_IN_MILLIS,
                                         0)»'''
   }
-  
-  // TODO actual persistence
-  public static List<Note> notes = new ArrayList<Note>
+
 }

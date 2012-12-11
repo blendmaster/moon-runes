@@ -21,7 +21,7 @@ public class NoteDetailFragment extends Fragment {
     super.onCreate(savedInstanceState)
 
     // TODO load from database or whatever
-    note = Note::notes.get(id)
+    note = MoonRunes::notes.get(id)
   }
 
   @ViewById public RuneView rune_view
