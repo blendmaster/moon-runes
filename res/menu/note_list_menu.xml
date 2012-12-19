@@ -4,7 +4,6 @@
     <item
         android:id="@+id/record"
         android:icon="@android:drawable/ic_menu_add"
-        android:onClick="startRecording"
         android:showAsAction="ifRoom|withText"
         android:title="@string/record">
     </item>

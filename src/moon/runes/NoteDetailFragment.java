@@ -43,6 +43,8 @@ public class NoteDetailFragment extends Fragment {
     setHasOptionsMenu(true);
 
     note = MoonRunes.notes.get(id);
+
+    getActivity().setTitle(note.toString());
   }
 
   @ViewById
@@ -53,9 +55,17 @@ public class NoteDetailFragment extends Fragment {
     rune_view.note = note;
   }
 
+  ShareActionProvider sap;
+
   @Override
-  public void onResume() {
-    super.onResume();
+  public void onCreateOptionsMenu(Menu m, MenuInflater inflater) {
+    super.onCreateOptionsMenu(m, inflater);
+
+    inflater.inflate(R.menu.note_detail_menu, m);
+
+    sap =
+        (ShareActionProvider)m.findItem(R.id.menu_item_share)
+                              .getActionProvider();
 
     Log.d("writer", "creating intent!");
     Intent it = new Intent();
@@ -63,22 +73,11 @@ public class NoteDetailFragment extends Fragment {
     it.putExtra(Intent.EXTRA_TEXT, "This is a note, yo!");
     it.putExtra(Intent.EXTRA_STREAM, createImage());
     it.setType("image/png");
+    sap.setShareIntent(it);
+
     // force share intent to rerender
     // http://stackoverflow.com/questions/12087164/shareactionprovider-not-clickable-and-not-rendering-properly-on-first-render
     getActivity().invalidateOptionsMenu();
-  }
-
-  ShareActionProvider sap;
-
-  @Override
-  public void onCreateOptionsMenu(Menu m, MenuInflater inflater) {
-    inflater.inflate(R.menu.note_detail_menu, m);
-
-    sap =
-        (ShareActionProvider)m.findItem(R.id.menu_item_share)
-                              .getActionProvider();
-
-    super.onCreateOptionsMenu(m, inflater);
   }
 
   // create a png drawable from the note

@@ -19,9 +19,9 @@ import com.google.gson.stream.JsonWriter;
 /**
  * JSON based persistence layer. fuck yeah
  */
-class MoonRunes extends Application {
+public class MoonRunes extends Application {
 
-  static final String FILE = "notes.json";
+  static final String FILE = "notesv2.json";
 
   public static List<Note> notes;
 

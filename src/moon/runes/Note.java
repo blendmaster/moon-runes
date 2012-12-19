@@ -15,7 +15,7 @@ import android.content.Context;
 /**
  * A piece of your memory.
  */
-@Data class Note {
+@Data public class Note {
   private List<Rune> runes = new ArrayList<Rune>();
   private String annotation = "";
 

@@ -2,11 +2,11 @@ package moon.runes;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.FragmentById;
+import com.googlecode.androidannotations.annotations.OptionsItem;
+import com.googlecode.androidannotations.annotations.OptionsMenu;
 
 /**
  * An activity representing a list of Notes. This activity has different
@@ -23,10 +23,8 @@ import com.googlecode.androidannotations.annotations.FragmentById;
  * This activity also implements the required {@link Callbacks}
  * interface to listen for item selections.
  */
-//@OptionsMenu(R$menu::note_list_menu)
-// XXX stupid xtend adds a Integer.valueOf wrapper to "R$menu::note_list_menu"
-// for some reason. breaks everything ;_;
 @EActivity(R.layout.activity_note_list)
+@OptionsMenu(R.menu.note_list_menu)
 public class NoteListActivity extends FragmentActivity
     implements Callbacks {
 
@@ -82,14 +80,7 @@ public class NoteListActivity extends FragmentActivity
     }
   }
 
-  @Override
-  public
-  boolean onCreateOptionsMenu(Menu m) {
-    getMenuInflater().inflate(R.menu.note_list_menu, m);
-    return super.onCreateOptionsMenu(m);
-  }
-
-  void startRecording(MenuItem item) {
+  @OptionsItem void record() {
     RecorderActivity_.intent(this).start();
   }
 }

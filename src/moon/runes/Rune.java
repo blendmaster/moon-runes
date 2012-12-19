@@ -1,17 +1,15 @@
 package moon.runes;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NonNull;
 
 /**
  * A symbol of great power.
  */
-@Data class Rune {
-  private List<Stroke> strokes = new ArrayList<Stroke>();
-
-  Rune(List<Stroke> strokes) {
-    this.strokes = strokes;
-  }
+@Data @AllArgsConstructor(suppressConstructorProperties=true)
+public class Rune {
+  @NonNull private List<Stroke> strokes;
 }
