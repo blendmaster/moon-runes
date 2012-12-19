@@ -2,6 +2,7 @@ package moon.runes;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -14,25 +15,13 @@ import android.view.View;
  *
  * Draws the note's runes as "text", left-to-right order.
  */
-class RuneView extends View {
+public class RuneView extends View {
 
   Note note;
 
   void setNote(Note note) {
     this.note = note;
     requestLayout(); // with new info
-  }
-
-  public RuneView(Context ctx, AttributeSet attrs, int defStyle) {
-    super(ctx, attrs, defStyle);
-  }
-
-  RuneView(Context ctx, AttributeSet attrs) {
-    super(ctx, attrs);
-  }
-
-  RuneView(Context ctx) {
-    super(ctx);
   }
 
   // in px
@@ -42,36 +31,38 @@ class RuneView extends View {
   int letterSpacing = 110;
   int paddingLeft = 10;
   int paddingTop = 10;
-  int color;
-  // {
-  // TypedValue tv = new TypedValue();
-  // getCon.theme.resolveAttribute(android::R$attr::colorForeground, tv, true);
-  // resources.getColor(tv.resourceId);
-  // }
-
-  // carriage position, as x offset
-  int carriage = 0;
-
+  int color = Color.WHITE; // TODO custom attributes and themes and shit
 
   private final Paint p = new Paint();
   private final Matrix toLetter = new Matrix();
   private final Path strokePaths = new Path();
 
-  @Override
-  protected
-  void onDraw(Canvas c) {
-    if (note == null) {
-      return;
-    }
+  public RuneView(Context ctx, AttributeSet attrs, int defStyle) {
+    super(ctx, attrs, defStyle);
 
     p.setColor(color);
     p.setStyle(Paint.Style.STROKE);
     p.setStrokeWidth(5);
+  }
+
+  public RuneView(Context ctx, AttributeSet attrs) {
+    this(ctx, attrs, 0);
+  }
+
+  public RuneView(Context ctx) {
+    this(ctx, null, 0);
+  }
+
+  @Override
+  protected void onDraw(Canvas c) {
+    if (note == null) {
+      return;
+    }
 
     toLetter.setScale(fontSize, fontSize);
     toLetter.postTranslate(paddingLeft, paddingTop);
 
-    carriage = 0;
+    int carriage = 0; // like a typewriter
 
     for (Rune rune : note.getRunes()) {
 
@@ -93,21 +84,22 @@ class RuneView extends View {
   }
 
   @Override
-  protected
-  void onMeasure(int widthSpec, int heightSpec) {
+  protected void onMeasure(int widthSpec, int heightSpec) {
     // calculate full height necessary to display all the runes
     int calcHeight = paddingTop;
 
     int width = View.MeasureSpec.getSize(widthSpec);
-    carriage = paddingLeft;
-    for (int i = 0; i < note.getRunes().size(); i++) {
-      carriage += letterSpacing;
-      if ((carriage + letterSpacing) > width) {
-        carriage = paddingLeft;
-        calcHeight += lineHeight;
+
+    if (note != null) {
+      int carriage = paddingLeft;
+      for (int i = 0; i < note.getRunes().size(); i++) {
+        carriage += letterSpacing;
+        if ((carriage + letterSpacing) > width) {
+          carriage = paddingLeft;
+          calcHeight += lineHeight;
+        }
       }
     }
-
     setMeasuredDimension(width, calcHeight + lineHeight);
   }
 

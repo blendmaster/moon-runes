@@ -52,9 +52,11 @@ public class NoteListFragment extends ListFragment {
   public void onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    // Restore the previously serialized activated item position.
-    if (savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
-      setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
+    if (savedInstanceState != null) {
+      // Restore the previously serialized activated item position.
+      if (savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
+        setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
+      }
     }
   }
 

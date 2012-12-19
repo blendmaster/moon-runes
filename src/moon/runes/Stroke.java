@@ -1,5 +1,8 @@
 package moon.runes;
 
+import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import android.graphics.Path;
 
 /**
@@ -7,14 +10,19 @@ import android.graphics.Path;
  *
  * Essentially, a persistable version of android.gesture.GestureStroke
  */
-class Stroke {
-  public float[] points; // x,y positions of the points on the path
+@Data @RequiredArgsConstructor(suppressConstructorProperties=true)
+public class Stroke {
+  // x,y positions of the points on the path
+  @NonNull private final float[] points;
 
-  Stroke(float[] points) {
-    this.points = points;
+  private transient Path path;
+
+  public Path getPath() {
+    if (path == null) { path = makePath(); }
+    return path;
   }
 
-  Path getPath() {
+  private Path makePath() {
     Path it = new Path();
     float mX = points[0];
     float mY = points[1];

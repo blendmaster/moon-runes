@@ -20,7 +20,7 @@ import com.googlecode.androidannotations.annotations.EActivity;
  * form."
  */
 @EActivity
-class RecorderActivity extends Activity implements
+public class RecorderActivity extends Activity implements
     GestureOverlayView.OnGesturePerformedListener {
 
   Note note;
@@ -43,7 +43,7 @@ class RecorderActivity extends Activity implements
   }
 
   // every stroke is normalized to this
-  static RectF normalized = new RectF(0, 0, 1, 1);
+  private final RectF normalized = new RectF(0, 0, 1, 1);
 
   @Override
   public void onGesturePerformed(GestureOverlayView view, Gesture gesture) {
